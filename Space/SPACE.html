@@ -1,0 +1,1544 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8" />
+    <title>S P A C E</title>
+	<script type="text/javascript" src="js/phaser.min.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+            
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+    
+      //font
+    WebFontConfig = {
+    google: { families: [ 'Abel::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+
+
+        var winW = window.innerWidth; //document.body.offsetWidth;
+        var winH = window.innerHeight; //(document.body.offsetHeight + 800);
+
+var game = new Phaser.Game(winW, winH, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+
+function preload() {
+    game.load.image('title', 'assets/title.png');
+    game.load.audio('backgroundmusic', 'assets/space_bgm.mp3');
+    game.load.audio('textM', 'assets/text message iphone.mp3');
+    //filters
+    game.load.image('filterCanvas', 'assets/filter.png');    
+    
+    //bg
+    game.load.image('background','assets/sky_original.png');
+    game.load.image('backgroundPoly','assets/sky_poly.png');
+    game.load.image('backgroundGrey','assets/sky_grey.png');
+    game.load.image('backgroundBlur','assets/sky_blur.png');
+    //earth
+    game.load.image('earth', 'assets/Earth-a.png');
+    game.load.image('earthPoly', 'assets/earth-poly-a.png');
+    game.load.image('earthGrey', 'assets/Earth_grey.png');
+    game.load.image('earthBlur', 'assets/Earth-a_blur.png');
+    //Add planet code here! 1/5
+    
+    //planet moon
+    game.load.image('moon', 'assets/moon.png');
+    game.load.image('moonPoly','assets/moon_poly.png');
+    game.load.image('moonGrey', 'assets/moon.png');
+    game.load.image('moonBlur', 'assets/moon_blur.png');
+    //planet starfield
+    game.load.image('starfield', 'assets/Planet_starfield.png')
+    game.load.image('starfieldPoly', 'assets/Planet_starfield_poly.png')
+    game.load.image('starfieldGrey', 'assets/Planet_starfield_grey.png')
+    game.load.image('starfieldBlur', 'assets/Planet_starfield_blur.png')
+    
+    //planet invi
+    game.load.image('planetInvi', 'assets/Planet_Invisible.png');
+    game.load.image('planetInviPoly', 'assets/invisible_poly.png');
+    game.load.image('planetInviGrey', 'assets/Planet_Invisible_grey.png');
+    game.load.image('planetInviBlur', 'assets/Planet_Invisible_blur.png');
+    
+    //planet angular
+    game.load.image('planetAngular', 'assets/Planet_Angular.png');
+    game.load.image('planetAngularPoly', 'assets/Planet_Angular.png');
+    game.load.image('planetAngularGrey', 'assets/Planet_Angular_grey.png');
+    game.load.image('planetAngularBlur', 'assets/Planet_Angular_blur.png');
+    //planet rocky
+    game.load.image('planetRock','assets/Planet_Rocky.png');
+    game.load.image('planetRockPoly', 'assets/rocky_poly.png');
+    game.load.image('planetRockGrey', 'assets/Planet_Rocky_grey.png');
+    game.load.image('planetRockBlur', 'assets/Planet_Rocky_blur.png');
+    //planet noir
+    game.load.image('planetNoir','assets/Planet_Noir.png');
+    game.load.image('planetNoirPoly','assets/Noir_poly.png');
+    game.load.image('planetNoirGrey','assets/Planet_Noir.png');
+    game.load.image('planetNoirBlur','assets/Planet_Noir_blur.png');
+    //planet blur
+    game.load.image('planetBlur','assets/Planet_blur.png');
+    game.load.image('planetBlurPoly','assets/Planet_blur_poly.png');
+    game.load.image('planetBlurGrey','assets/Planet_blur_grey.png');
+    game.load.image('planetBlurBlur','assets/Planet_blur.png');
+    //planetmarble
+    game.load.image('planetMarble','assets/Planet_marble.png');
+    game.load.image('planetMarblePoly','assets/Planet_marble_poly.png');
+    game.load.image('planetMarbleGrey','assets/Planet_marble_grey.png');
+    game.load.image('planetMarbleBlur','assets/Planet_marble_blur.png');
+    //astronaut
+    game.load.image('dude', 'assets/Astronaut.png', 32, 48);
+
+    //Aliens
+    game.load.image('alien1', 'assets/alien1.png');  
+    game.load.image('alien2', 'assets/alien2.png');
+    game.load.image('alien3a', 'assets/alien-3a.png');
+    game.load.image('alien3b', 'assets/alien-3b.png');
+    
+    //humans
+    game.load.image('human1', 'assets/human1.png');
+  //  game.load.image('human2', 'assets/human2.png');
+    game.load.image('familyYoung', 'assets/young.png');
+    game.load.image('familyOld', 'assets/old.png');
+    game.load.image('bro', 'assets/bro.png');
+    game.load.image('broMom', 'assets/bromom.png');
+    
+    
+    //TextBoxes
+   // game.load.image('human1Text', 'assets/earth text 2.png');
+ //   game.load.image('human2Text', 'assets/earth text 3.png');
+//    game.load.image('alien1Text', 'assets/planet 2 text 3.png');
+    game.load.image('1dinnerTogether', 'assets/earth text 1 - bro and mum.png');
+    game.load.image('2stillYoung', 'assets/earth text 3- bro.png');
+    game.load.image('5moreTime', 'assets/earth text 2 - bro and mum.png');
+    game.load.image('3dadDead', 'assets/earth text dad dead.png');
+    game.load.image('4parentsGone', 'assets/earth text 2 - bro.png');
+    game.load.image('stayEarthText2', 'assets/earth text 1 - bro.png');
+    game.load.image('stayEarthText1', 'assets/earth text 1 - dad.png');
+    game.load.image('newGen', 'assets/newGen.png');
+    
+    //Notification text
+    game.load.image('notif1', 'assets/text1 - Dad\'s birthday.png');
+    game.load.image('notif2', 'assets/text2 - Love, Mum.png');
+    game.load.image('notif3', 'assets/text3 - see your nephew.png');
+    game.load.image('notif4', 'assets/text4 - be astronaut like uncle.png');
+    game.load.image('notif5', 'assets/text5 - dad is sick.png');
+    game.load.image('notif6', 'assets/text6 - dad passed away.png');
+    game.load.image('notif7', 'assets/text7 - dad\'s death took  a toll on mum.png');
+    game.load.image('notif8', 'assets/text8- mum in bad condition.png');
+    game.load.image('notif9', 'assets/text9 - mum passed away.png');
+    game.load.image('notif10', 'assets/text10 - brother in car accident.png');
+    
+    
+    //blur
+    game.load.script('filterX', 'https://cdn.rawgit.com/photonstorm/phaser/master/filters/BlurX.js');
+    game.load.script('filterY', 'https://cdn.rawgit.com/photonstorm/phaser/master/filters/BlurY.js');
+    
+    //marble
+    game.load.script('filter', 'https://cdn.rawgit.com/photonstorm/phaser/master/filters/Marble.js');
+    
+     game.load.script('gray', 'https://cdn.rawgit.com/photonstorm/phaser/master/filters/Gray.js');
+   
+}
+    
+var music;
+var textSound;
+    
+var shootingstar;
+var filter;
+
+var filterM;
+var marble;
+var marbleF;
+    
+var titleCard;
+var titleCard1;
+var titleCard2;
+var titleCard3;
+var titleCardArray;
+var titleCardImages;
+var titleCardTimer;
+var titleCardShow;
+    
+var player;
+var playerSmall;
+var playerJet;
+var playerSprite;
+
+var npcs;
+var npcEarth;
+var ncpMoon;
+var npcRock;
+var alien1;
+var alien2;
+var alien3a;
+var alien3b;
+var human1;
+var human2;
+var famYoung;
+var famOld;
+var bro;
+var broMom
+    
+var textBoxes;
+var human1Text;
+var broText1;
+var broText2;
+var broMomText;
+var familyOldText;
+var familyYoungText;
+var stayEarthText1;    
+var stayEarthText2;
+var alien1Text;
+    
+var cursors;
+var scoreText;
+    
+var gameOverSlate;
+    
+var miniMap;
+var miniMapScale = 80;
+var miniMapPadding = 20;
+var miniMapBg;
+    
+var gameOverText;
+var yearsEarth;
+var yearsAge;
+var spriteText;
+var playerStartX;
+var playerStartY;
+var gameTimerNum;
+var worldRightBound;
+var worldLeftBound;
+var worldUpBound;
+var worldDownBound;
+var worldBoundPadding;
+var playerSpeed;
+var planetChangeSpeed;
+var mode;
+var miniMapTimer = 0;
+var doBlink;
+var doBlinkCount;
+ 
+var planets;
+var planetsDefault;
+var planetsPoly;
+var planetsGrey;
+var planetsBlur;
+
+var earth;
+var earthPoly;
+var earthGrey;
+var earthBlur;
+
+var moon;
+var moonPoly;
+var moonGrey;
+var moonBlur;
+var moonMini;
+    
+var starfield;
+var starfieldBlur;
+var starfieldGrey;
+var starfieldPoly;
+var starfieldMini;
+    
+var planetInvi;
+var planetInviGrey;
+var planetInviPoly;
+var planetInviBlur;
+    
+var planetAngular;
+var planetAngularPoly;
+var planetAngularGrey;
+var planetAngularBlur;
+
+var planetRock;
+var planetRockPoly;
+var planetRockGrey;
+var planetRockBlur;
+    
+var planetNoir;
+var planetNoirPoly;
+var planetNoirBlur;
+var planetNoirGrey;
+
+var planetBlur;
+var planetBlurGrey;
+var planetBlurBlur;
+var planetBlurPoly;
+    
+var planetMarble;
+var planetMarbleGrey;    
+var planetMarblePoly;
+var planetMarbleBlur;    
+    
+var bg;
+var bgGrey;
+var bgPoly;
+var bgBlur;
+   
+/*
+var filterCanvas;    
+var marble;
+var gray;
+var blurX;
+var blurY;
+*/
+
+//Add planet code here! 2/5
+var lastVisited = "earth";
+var visited = false;   
+var planetInviVisited = false;
+var planetAngularVisited = false;
+var planetRockPolyVisited = false;
+var earthVisited = false;
+var moonVisited = false;
+var starfieldVisited = false;
+var noirVisied = false;
+var marbleVisited = false;
+var blurVisited = false;
+
+var notiGroup;
+var noti1;
+var noti2;
+var noti3;
+var noti4;
+var noti5;
+var noti6;
+var noti7;
+var noti8;
+var noti9;
+var noti10;
+    
+var dadDieSet;
+var momDieSet;
+var broDieSet;
+var parentFadeSet;
+var parentFadeSecs;
+var miniMapFadeSet;
+var miniMapFadeSecs;
+var notiFadeSecs;
+var notiFadeInterval;
+var notiFadeDelay;
+    
+var gameStarted = false;
+var gameNotOver = false;
+var gameWorldTime = 0;
+var playerAge =25;
+var earthYears = 2100;
+var timer1;
+var timer2;
+var timer3;
+var timeOnEarth = 0;
+var npcX;
+var npcY;
+    
+function create() {
+
+//--PREFERENCES------------------------------------------------------
+    //No of seconds before game ends
+    gameTimerNum = 300;
+    //Change these to expand screen:
+    worldRightBound = 15000;
+    worldDownBound = 15000;
+    //planet location coordinates
+    earthX = 5000*1.5; earthY = 5000*1.5;
+    angularX = 8500*1.5; angularY = 400*1.5;
+    inviX = 7900*1.5; inviY = 8300*1.5;
+    rockX = 100*1.5; rockY = 3333*1.5;
+    moonX = 5678*1.5; moonY = 6500*1.5;
+    starfieldX = 4100*1.5; starfieldY = 4100*1.5;
+    marbleX = 1111*1.5; marbleY = 1200*1.5;
+    blurX = 7654*1.5; blurY = 3456*1.5;
+    noirX = 1234*1.5; noirY = 8750*1.5;
+    //Player bound values
+    worldLeftBound = 100;
+    worldUpBound = 130;
+    worldBoundPadding = 100;
+     //Player start location
+    playerStartX = earthX+500;
+    playerStartY = earthY+500;
+    //HACK PLAYER MOVE SPEED HERE
+    playerSpeed = 700;
+    //Planet tween change speed
+    planetChangeSpeed = 1000;
+    
+    //Fading things
+    parentFadeSet = 130;
+    parentFadeSecs = 10;
+    miniMapFadeSet = 10;
+    miniMapFadeSecs = 30;
+    notiFadeSecs = 1;
+    notiFadeInterval = 20;
+    notiFadeDelay = 5;
+    
+    //TitleCard
+    titleCardTimer = 1;
+    titleCardShow = 0;
+    npcX = earthX+200;
+    npcY = earthY+100;
+//----------------------------------------------------------------------------
+    
+    music = game.add.audio('backgroundmusic');
+    textSound = game.add.audio('textM');
+    music.play();
+    
+    //  We're going to be using physics, so enable the Arcade Physics system
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+
+    game.world.setBounds(0,0, worldRightBound, worldDownBound);
+    bgGrey = game.add.tileSprite(0,0, worldRightBound, worldDownBound, 'backgroundGrey');
+    bgPoly = game.add.tileSprite(0,0, worldRightBound, worldDownBound, 'backgroundPoly');
+    bgBlur = game.add.tileSprite(0,0, worldRightBound, worldDownBound, 'backgroundBlur');
+    bg = game.add.tileSprite(0,0, worldRightBound, worldDownBound, 'background');
+
+
+    planets = game.add.group();
+    planetsDefault = game.add.group();
+    planetsPoly = game.add.group();
+    planetsGrey = game.add.group();
+    planetsBlur = game.add.group();
+    miniMap = game.add.group();
+
+    //player = game.add.group();
+
+    //Add planet code here! 3/5
+//--PLANET CREATION------------------------------------------------------------------
+    planets.enableBody = true;
+   // planetsPoly.enableBody = true;
+    planetsDefault.enableBody = true;
+  //  planetsBlur.enableBody = true;
+  //  planetsGrey.enableBody = true;
+    
+    
+    
+    //earth and all distorted versions creation
+    earth = planetsDefault.create(earthX,earthY, 'earth');
+    earthPoly = planetsPoly.create(earthX,earthY,'earthPoly');
+    earthGrey = planetsGrey.create(earthX,earthY,'earthGrey');
+    earthBlur = planetsBlur.create(earthX,earthY,'earthBlur');
+    
+    //moon
+    moon = planetsDefault.create(moonX,moonY, 'moon');
+    moon.scale.setTo(0.3,0.3);
+    moonPoly = planetsPoly.create(moonX,moonY, 'moonPoly');
+    moonPoly.scale.setTo(0.3,0.3);
+    moonGrey = planetsGrey.create(moonX,moonY, 'moonGrey');
+    moonGrey.scale.setTo(0.3,0.3);
+    moonBlur = planetsBlur.create(moonX,moonY, 'moonBlur');
+    moonBlur.scale.setTo(0.3,0.3);
+    
+    //starfield
+    starfield = planetsDefault.create(starfieldX,starfieldY, 'starfield');
+    starfield.scale.setTo(0.2,0.2);
+    starfieldPoly = planetsPoly.create(starfieldX,starfieldY, 'starfieldPoly');
+    starfieldPoly.scale.setTo(0.2,0.2);
+    starfieldGrey = planetsGrey.create(starfieldX,starfieldY, 'starfieldGrey');
+    starfieldGrey.scale.setTo(0.2,0.2);
+    starfieldBlur = planetsBlur.create(starfieldX,starfieldY, 'starfieldBlur');
+    starfieldBlur.scale.setTo(0.2,0.2);
+    
+    // planet invi and all distorted versions creation
+    planetInvi = planetsDefault.create( inviX,inviY, 'planetInvi');
+    planetInviPoly = planetsPoly.create( inviX+200,inviY+200, 'planetInviPoly');
+    planetInviGrey = planetsGrey.create(inviX,inviY,'planetInviGrey');
+    planetInviBlur = planetsBlur.create( inviX+200,inviY+200, 'planetInviBlur');
+ 
+
+     // planet angular and all distorted versions creation
+    planetAngular = planetsDefault.create( angularX,angularY, 'planetAngular');
+    planetAngularGrey = planetsGrey.create( angularX,angularY, 'planetAngularGrey');
+    planetAngularPoly = planetsPoly.create( angularX,angularY, 'planetAngularPoly');
+    planetAngularBlur = planetsBlur.create( angularX,angularY, 'planetAngularBlur');
+    
+    // planet rock and all distorted versions creation
+    planetRock =planetsDefault.create(rockX,rockY, 'planetRock')
+    planetRockPoly = planetsPoly.create( rockX,rockY, 'planetRockPoly');
+    planetRockGrey = planetsGrey.create( rockX,rockY, 'planetRockGrey');
+    planetRockBlur = planetsBlur.create( rockX,rockY, 'planetRockBlur');
+    
+    //noir
+    planetNoir = planetsDefault.create( noirX,noirY, 'planetNoir');
+    planetNoirPoly =  planetsPoly.create( noirX,noirY, 'planetNoirPoly');
+    planetNoirGrey =  planetsGrey.create( noirX,noirY, 'planetNoirGrey');
+    planetNoirBlur =  planetsBlur.create( noirX,noirY, 'planetNoirBlur');
+    
+    planetBlur = planetsDefault.create( blurX,blurY, 'planetBlur');
+    planetNoirPoly =  planetsPoly.create( blurX,blurY, 'planetBlurPoly');
+    planetNoirGrey =  planetsGrey.create( blurX,blurY, 'planetBlurGrey');
+    planetNoirBlur =  planetsBlur.create( blurX,blurY, 'planetBlurBlur');
+    
+    planetMarble = planetsDefault.create( marbleX, marbleY, 'planetMarble');
+    planetMarblePoly =  planetsPoly.create( marbleX, marbleY, 'planetMarblePoly');
+    planetMarbleGrey =  planetsGrey.create( marbleX, marbleY, 'planetMarbleGrey');
+    planetMarbleBlur =  planetsBlur.create( marbleX, marbleY, 'planetMarbleBlur');
+ 
+     for (var i = 0, len = planets.children.length; i < len; i++) {
+            planets.children[i].alpha = 0;
+     }
+    
+    for (var i = 0, len = planetsPoly.children.length; i < len; i++) {
+            planetsPoly.children[i].alpha = 0;
+     }
+    for (var i = 0, len = planetsGrey.children.length; i < len; i++) {
+            planetsGrey.children[i].alpha = 0;
+     }
+    for (var i = 0, len = planetsBlur.children.length; i < len; i++) {
+            planetsBlur.children[i].alpha = 0;
+     }
+     for (var i = 0, len = planetsDefault.children.length; i < len; i++) {
+            planetsDefault.children[i].alpha = 1;
+       //  console.log("making default planets appear: " + planetsDefault.children[i].key)
+     }
+    
+    
+//-----------------------------------------------------------------------------------
+    
+//--NPC CREATION-----------------------------------------------------------------
+    npcs = game.add.group();
+    npcMoon = game.add.group();
+    npcEarth = game.add.group();
+    npcRock = game.add.group();
+    npcs.enableBody = true;    
+    npcEarth.enableBody = true;  
+    
+    human1 = npcEarth.create(earthX+200,earthY+100, 'human1');
+    //human2 = npcEarth.create(earthX+700,earthY+100, 'human2');
+    familyOld = npcEarth.create(earthX+200,earthY+100, 'familyOld');
+    familyYoung = npcEarth.create(earthX+200,earthY+100, 'familyYoung');
+    bro = npcEarth.create(earthX+200,earthY+100, 'bro');
+    broMom = npcEarth.create(earthX+200,earthY+100, 'broMom');
+    
+    alien1 = npcs.create(moonX+200,moonY+300,'alien1');
+    alien1.scale.setTo(0.15,0.15);
+    alien2 = npcs.create(moonX+370,moonY+300,'alien2');
+    alien2.scale.setTo(0.6,0.6);
+    npcMoon.add(alien1);
+    npcMoon.add(alien2);
+    
+    alien3a = npcs.create(rockX+350,rockY+400,'alien3a');
+    alien3a.scale.setTo(0.3,0.3);
+    alien3b = npcs.create(rockX+500,rockY+300,'alien3b');
+    alien3b.scale.setTo(0.3,0.3);
+    npcRock.add(alien3a);
+    npcRock.add(alien3b);
+    
+    for (var i = 0, len = npcEarth.children.length; i < len; i++) {
+         console.log("npcdisable  working")
+            npcEarth.children[i].kill();
+     }
+    
+    /*
+    //makes all npc invi at start of game
+     for (var i = 0, len = npcEarth.children.length; i < len; i++) {
+         console.log("npc working")
+            npcEarth.children[i].alpha = 0;
+     }
+     */
+    
+//--TEXTBOX CREATION-----------------------------------------------------------------
+    textBoxes = game.add.group();
+    
+    human1Text = textBoxes.create(0, 0, 'newGen');
+    broText1 = textBoxes.create(0, 0, '4parentsGone');
+    broText2 = textBoxes.create(0, 0, '5moreTime');
+    broMomText = textBoxes.create(0, 0, '3dadDead');
+    familyOldText = textBoxes.create(0, 0, '2stillYoung');
+    familyYoungText = textBoxes.create(0, 0, '1dinnerTogether');
+    stayEarthText1 = textBoxes.create(0, 0, 'stayEarthText1');
+    stayEarthText2 = textBoxes.create(0, 0, 'stayEarthText2');
+     
+   
+    //sets all textboxes invi
+     for (var i = 0, len = textBoxes.children.length; i < len; i++) {
+        textBoxes.children[i].alpha = 0;
+        console.log("textbox working");
+     }
+    textBoxes.fixedToCamera = true;
+    textBoxes.cameraOffset.setTo(winW/2-200, 200);
+   
+    
+    //TitleCard
+    titleCard = game.add.sprite(playerStartX, playerStartY, 'title');
+    titleCard.anchor.setTo(0.5,0.5);
+    titleCard.scale.setTo(0.5,0.5);
+    
+    
+//----Text Notifications--------------------------------------------------------------
+    
+    notiGroup = game.add.group();
+    
+    noti1 = notiGroup.create(0, 0, 'notif1');
+    noti2 = notiGroup.create(0, 0, 'notif2');
+    noti3 = notiGroup.create(0, 0, 'notif3');
+    noti4 = notiGroup.create(0, 0, 'notif4');
+    noti5 = notiGroup.create(0, 0, 'notif5');
+    noti6 = notiGroup.create(0, 0, 'notif6');
+    noti7 = notiGroup.create(0, 0, 'notif7');
+    noti8 = notiGroup.create(0, 0, 'notif8');
+    noti9 = notiGroup.create(0, 0, 'notif9');
+    noti10 = notiGroup.create(0, 0, 'notif10');
+    
+    for (var i = 0, len = notiGroup.children.length; i < len; i++) {
+        notiGroup.children[i].alpha = 0;
+        notiGroup.children[i].anchor.setTo(0.5,0.5);
+        notiGroup.children[i].scale.setTo(0.75,0.75);
+        //notiGroup.children[i].x = i*20;
+        console.log("notiBoxes working");
+        
+     }
+    notiGroup.fixedToCamera = true;
+    notiGroup.cameraOffset.setTo(winW/2, 550);
+    
+
+    
+//--FILTERS----------------------------------------------------------------------- 
+    filterCanvas = game.add.tileSprite(0,0, worldRightBound, worldDownBound, 'filterCanvas');
+   // filterMarble = game.add.filter('Marble', winW, winH);
+    //filterMarble.alpha = 0.005;
+    //filterMarble.intensity = 0.20;
+
+    //blurX = game.add.filter('blurX');
+    //blurY = game.add.filter('blurY');
+    //filterCanvas.filters = [ gray];
+
+    //TRIED TO MAKE FILTERS WORK BUT COULDN'T
+
+//--GAMEOVER BLACK Slate------------------------------------------------------------
+    
+    gameOverSlate = game.add.graphics(0,0);        
+    gameOverSlate.beginFill('black', 1);
+    gameOverSlate.boundsPadding = 0;
+    gameOverSlate.drawRect(0, 0, winW, winH);
+    
+    gameOverSlate.fixedToCamera = true;
+    gameOverSlate.alpha = 0;
+    
+//--MINIMAP-------------------------------------------------------------------------    
+    //Planet miniMap
+    miniMapBg = game.add.graphics(0, 0);
+    miniMap.add(miniMapBg);
+    miniMapBg.beginFill(0xFFFFFF, 0.2);
+    miniMapBg.boundsPadding = 0;
+    //miniMapBg.drawRect(miniMap.x-miniMapPadding, miniMap.y-miniMapPadding, (miniMap.x +(worldRightBound/miniMapScale)+(miniMapPadding*1.5)), (miniMap.y + (worldRightBound/miniMapScale)+(miniMapPadding*1.5)));
+    miniMapBg.drawRect(miniMap.x-miniMapPadding, miniMap.y-miniMapPadding, (worldRightBound/miniMapScale)+(miniMapPadding*1.5), (worldDownBound/miniMapScale)+(miniMapPadding*1.5));
+
+    earthMini = miniMap.create((earth.x/miniMapScale), (earth.y/miniMapScale), 'earth');
+    earthMini.scale.setTo((1/miniMapScale), (1/miniMapScale));
+    
+    moonMini = miniMap.create((moon.x/miniMapScale), (moon.y/miniMapScale), 'moon');
+    moonMini.scale.setTo((0.1/miniMapScale), (0.1/miniMapScale));
+    moonMini.alpha = 0;
+    
+    starfieldMini = miniMap.create((starfield.x/miniMapScale), (starfield.y/miniMapScale), 'starfield');
+    starfieldMini.scale.setTo((0.1/miniMapScale), (0.1/miniMapScale));
+    starfieldMini.alpha = 0;
+    
+    planetInviMini = miniMap.create((planetInvi.x/miniMapScale), (planetInvi.y/miniMapScale), 'planetInvi');
+    planetInviMini.scale.setTo((1/miniMapScale), (1/miniMapScale));
+    planetInviMini.alpha = 0;
+    
+    planetAngularMini = miniMap.create((planetAngular.x/miniMapScale), (planetAngular.y/miniMapScale), 'planetAngular');
+    planetAngularMini.scale.setTo((1/miniMapScale), (1/miniMapScale));
+    planetAngularMini.alpha = 0;
+    
+    planetRockPolyMini = miniMap.create((planetRockPoly.x/miniMapScale), (planetRockPoly.y/miniMapScale), 'planetRockPoly');
+    planetRockPolyMini.scale.setTo((1/miniMapScale), (1/miniMapScale));
+    planetRockPolyMini.alpha = 0;
+    
+    planetNoirMini = miniMap.create((planetNoir.x/miniMapScale), (planetNoir.y/miniMapScale), 'planetNoir');
+    planetNoirMini.scale.setTo((1/miniMapScale), (1/miniMapScale));
+    planetNoirMini.alpha = 0;
+    
+    planetMarbleMini = miniMap.create((planetMarble.x/miniMapScale), (planetMarble.y/miniMapScale), 'planetMarble');
+    planetMarbleMini.scale.setTo((1/miniMapScale), (1/miniMapScale));
+    planetMarbleMini.alpha = 0;
+    
+    planetBlurMini = miniMap.create((planetBlur.x/miniMapScale), (planetBlur.y/miniMapScale), 'planetBlur');
+    planetBlurMini.scale.setTo((1/miniMapScale), (1/miniMapScale));
+    planetBlurMini.alpha = 0;
+    
+    //Mini player
+    playerSmall = miniMap.create(0,0, 'dude');
+    playerSmall.anchor.setTo(0.5,0.5);
+    playerSmall.scale.setTo(10/miniMapScale, 10/miniMapScale);
+    miniMap.fixedToCamera = true;
+    miniMap.cameraOffset.setTo((winW - miniMapPadding - (worldRightBound/miniMapScale)), (winH - miniMapPadding - (worldDownBound/miniMapScale)));
+    
+    miniMap.alpha = 0;
+
+      console.log("minimap working")
+//--PLAYER CREATION--------------------------------------------------------------
+    // The player and its settings
+    player = game.add.sprite(playerStartX, playerStartY, 'dude');
+    //playerSprite = player.create(playerStartX, playerStartY, 'dude');
+    //playerJet = player.create(playerStartX-20, playerStartY, 'jet');
+    player.anchor.setTo(0.5,0.5);
+    player.enableBody = true;
+    
+//-----------------------------------------------------------------------------------
+  
+    //  We need to enable physics on the player
+    game.physics.arcade.enable(player);
+    game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON);
+
+    //  Player physics properties. Give the little guy a slight bounce.
+    /*
+    player.body.bounce.y = 0.4;
+    player.body.gravity.y = 5;
+    player.body.collideWorldBounds = true;
+    player.body.drag.set(7, 7);
+    //*/
+    
+    //  Our two animations, walking left and right.
+    //player.animations.add('left', [0, 1, 2, 3], 10, true);
+    //player.animations.add('right', [5, 6, 7, 8], 10, true);
+    
+/*
+    // The score
+    scoreText = game.add.text(16, 16, 'Planets Visited: 0', { font: '32px Abel' , fill: '#ffffff' });
+    scoreText.fixedToCamera = true;
+    scoreText.cameraOffset.setTo(50, (winH - 50));
+   */ 
+      //End Game text
+    gameOverText = game.add.text((winW/2), (winH/2), 'The End', { font: '50px Abel;', fill: 'red' });
+    gameOverText.anchor.setTo(0.5,0.5);
+    gameOverText.fixedToCamera = true;
+    gameOverText.visible = false;
+    
+    
+    //display text of timer
+    yearsEarth = game.add.text(16, 16, 'Earth: Year 2100 CE', { font: '32px Abel', fill: '#ffffff' });
+    yearsAge = game.add.text(16, 50, 'Your Age: 25 Earth Years', { font: '32px Abel', fill: '#ffffff' });
+    yearsEarth.fixedToCamera = true;
+    yearsAge.fixedToCamera = true;
+    //end of End game timer
+    
+    //Sprite text
+   // spriteText = game.add.text(16, 68, 'Player is at: x/y', { fontSize: '32px', fill: '#ffffff' });
+   // spriteText.fixedToCamera = true;
+    
+    //  Our controls.
+    cursors = game.input.keyboard.createCursorKeys();
+    fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    game.input.keyboard.addKeyCapture([
+        Phaser.Keyboard.SPACEBAR
+    ]);
+    
+    //for starfield
+       var fragmentSrc = [
+        "precision mediump float;",
+        "uniform float     time;",
+        "uniform vec2      resolution;",
+        "uniform vec2      mouse;",
+
+        "const float Tau        = 6.2832;",
+        "const float speed  = .02;",
+        "const float density    = .04;",
+        "const float shape  = .04;",
+
+        "float random( vec2 seed ) {",
+            "return fract(sin(seed.x+seed.y*1e3)*1e5);",
+        "}",
+
+        "float Cell(vec2 coord) {",
+            "vec2 cell = fract(coord) * vec2(.5,2.) - vec2(.0,.5);",
+            "return (1.-length(cell*2.-1.))*step(random(floor(coord)),density)*2.;",
+        "}",
+
+        "void main( void ) {",
+
+            "vec2 p = gl_FragCoord.xy / resolution  - mouse;",
+
+            "float a = fract(atan(p.x, p.y) / Tau);",
+            "float d = length(p);",
+
+            "vec2 coord = vec2(pow(d, shape), a)*256.;",
+            "vec2 delta = vec2(-time*speed*256., .5);",
+            "//vec2 delta = vec2(-time*speed*256., cos(length(p)*10.)*2e0+time*5e-1); // wavy wavy",
+
+            "float c = 0.;",
+            "for(int i=0; i<3; i++) {",
+                "coord += delta;",
+                "c = max(c, Cell(coord));",
+            "}",
+
+            "gl_FragColor = vec4(c*d);",
+        "}"
+    ];
+    
+    filter = new Phaser.Filter(game, null, fragmentSrc);
+    filter.setResolution(winW, winH);
+
+    shootingstar = game.add.sprite();
+    shootingstar.width = winW;
+    shootingstar.height = winH;
+
+    shootingstar.filters = [ filter ];
+    shootingstar.alpha = 0;
+    
+    
+    // Marble
+    marbleF = game.add.sprite(0, 0);
+	marbleF.width = winW;
+	marbleF.height = winH;
+
+	filterM = game.add.filter('Marble', 800, 600);
+	filterM.alpha = 0.2;
+
+	marbleF.filters = [filterM];
+    marbleF.alpha = 0;
+    
+    // Blur
+    //Doesn't work: can't turn on or off on-the-fly!
+    /*
+    var blurX = game.add.filter('BlurX');
+	var blurY = game.add.filter('BlurY');
+    blurX.blur = 10;
+    blurY.blur = 10;
+    */
+    
+	//player.filters = [blurX, blurY];
+    
+}
+    
+function move(object, dir, speed, modeIn) {    
+    
+    var dirn = 0;
+    
+    switch (dir) {
+        case 'left':
+            dirn = 1;
+            break;
+        case 'right':
+            dirn = 2;
+            break;
+        case 'up':
+            dirn = 3;
+            break;
+        case 'down':
+            dirn = 4;
+            break;
+        default:
+            dirn = 0;
+            break;
+    }
+    
+    switch (modeIn) {
+        case 'shift+1':
+            dirn==0 ? dirn=0 : dirn++;
+            if (dirn > 4) {
+                dirn = 1;
+            }
+            break;
+        case 'shift-1':
+            dirn==0 ? dirn=0 : dirn--;
+            if (dirn < 1) {
+                dirn = 4;
+            }
+            break;
+        case 'inverse': // swap left and right
+            switch (dirn) {
+                case 1:
+                    dirn = 2;
+                    break;
+                case 2:
+                    dirn = 1;
+                    break;
+                case 3:
+                    dirn = 4;
+                    break;
+                case 4:
+                    dirn = 3;
+                    break;
+                default:
+                    break;
+            }
+            break;
+            
+        case 'mooncontrol': //no gravity
+            switch (dirn){
+                case 1:
+                    dirn = 1;
+                    break;
+                case 2:
+                    dirn = 2;
+                    break;
+                case 3:
+                    dirn = 3;
+                    break;
+                case 4:
+                    dirn = 3;
+                    break;
+                default:
+                    break;
+            }
+            break;
+        default:
+            break;
+    }
+    
+    switch (dirn) {
+        case 1:
+            object.body.velocity.x = -speed;
+            break;
+        case 2:
+            object.body.velocity.x = speed;
+            break;
+        case 3:
+            object.body.velocity.y = -speed;
+            break;
+        case 4:
+            object.body.velocity.y = speed;
+            break;
+        default:
+            object.body.velocity.x = 0;
+            object.body.velocity.y = 0;
+            break;
+    }
+}
+
+function update() {
+ //  Collide the player planets/npcs
+   // game.physics.arcade.overlap(player, npcEarth, npcEarthInteract, null, this);
+    game.physics.arcade.collide(player, npcRock, npcRockInteract, null, this);
+    game.physics.arcade.collide(player, npcMoon, npcMoonInteract, null, this);
+    game.physics.arcade.overlap(player,human1,human1Chat,null,this);
+    game.physics.arcade.overlap(player,bro,broChat,null,this);
+    game.physics.arcade.overlap(player,broMom,broMomChat,null,this);
+    game.physics.arcade.overlap(player,familyOld,familyOldChat,null,this);
+    game.physics.arcade.overlap(player,familyYoung,familyYoungChat,null,this);
+    game.physics.arcade.overlap(player,planetsDefault,applyDistort,null,this);
+    
+    filter.update(game.input.activePointer);
+    
+    filterM.update();
+        
+    updateGameText();
+    updateMiniMap(player, playerSmall);
+    screenWrap(player);
+    game.world.bringToTop(notiGroup);
+    
+     if (!gameStarted) {
+         //cursors.left.isDown || cursors.right.isDown || cursors.up.isDown || cursors.down.isDown
+    
+        if (fireButton.isDown) {
+            gameNotOver = true;
+            
+            titleCardTimer += game.time.elapsed;
+
+            if (titleCardTimer >= 20) {
+                titleCard.visible = false;
+                gameStarted = true;
+                //titleCardTimer = 0;
+                // human1.alpha = 1;
+                // human2.alpha =1;
+                 miniMap.alpha = 1;
+                 //End game timer
+                //start timer
+                timer1 = game.time.events.loop(Phaser.Timer.SECOND, ageCounter, this);
+                timer2 = game.time.events.add(Phaser.Timer.SECOND * gameTimerNum, endGameF, this);
+                timer3 = game.time.events.repeat(Phaser.Timer.SECOND, gameTimerNum, updateToFadeItems, this);
+            }
+        }
+    } else {
+        //gameStarted
+        //gameWorldTime += game.time.elapsed;
+    }
+     
+    //makes all textboxes invi 
+     if(!game.physics.arcade.overlap(player, npcEarth, null, null, this)){
+        for (var i = 0, len = textBoxes.children.length; i < len; i++) {
+            textBoxes.children[i].alpha = 0;
+        }
+
+    }
+
+    
+    if (gameNotOver) {
+        move(player, 'stop', playerSpeed, mode);
+
+        if (cursors.left.isDown)
+        {
+            move(player, 'left', playerSpeed, mode);
+            //player.animations.play('left');
+        }
+        else if (cursors.right.isDown)
+        {
+            move(player, 'right', playerSpeed, mode);
+            //player.animations.play('right');
+        }
+        if (cursors.up.isDown)
+        {
+            move(player, 'up', playerSpeed, mode);
+            //player.animations.play('right');
+        }
+         else if (cursors.down.isDown)
+        {
+            move(player, 'down', playerSpeed, mode);
+            //player.animations.play('right');
+        }
+        
+
+        
+    //Hacked together implementation for miniMap blinking
+        if (doBlink) {
+            miniMapTimer += game.time.elapsed;
+            blinkMiniMap();
+        }
+        
+         if(playerAge >= 65){
+            endGameF(); 
+        }
+        
+    }
+}
+
+function endGameF() {
+    gameOverText.visible = true;
+    gameNotOver = false;
+    player.body.velocity.x = 0;
+    player.body.velocity.y = 0;
+     game.add.tween( gameOverSlate ).to( { alpha: 1 }, 5*1000, Phaser.Easing.Linear.None, true, 0, 0, false);
+     game.add.tween( player ).to( { angle:180 }, 2*1000, Phaser.Easing.Cubic.In, true, 0, 0, false);
+    game.add.tween( player ).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
+    game.time.events.remove(timer1);
+    game.time.events.remove(timer2);
+    game.time.events.remove(timer3);
+
+}
+    
+function ageCounter(){
+    if(!game.physics.arcade.overlap(player,earth,null,null,this)){
+        //if not on earth
+         playerAge = playerAge+ 1/10;
+        timeOnEarth = 0;
+    }else{
+         //if on earth
+        timeOnEarth++;
+        playerAge = playerAge+ 1/2;
+    } 
+    
+    earthYears = earthYears +1/2;
+}
+    
+function blinkMiniMap() {
+    if (miniMapTimer >= 250) {
+        miniMapTimer = 0;
+        miniMapBg.visible = !miniMapBg.visible;
+        doBlinkCount -= 0.5;
+        if (doBlinkCount <= 0) {
+            doBlink = false;
+        }
+    }
+}
+var extraStatus;
+var notiNum = 0;
+var newNoti = false;
+
+function updateToFadeItems() {
+    //var gameTime = gameWorldTime/500; //Math.ceil(gameTimerNum - game.time.events.duration/1000);
+    gameWorldTime += 1;
+    var gameTime = gameWorldTime;
+ /*   
+    //hide parents after 130 secs, miniMap after that
+    if (gameTime > parentFadeSet  && !game.physics.arcade.overlap(player,earth,null,null,this)) {
+        game.add.tween( human1 ).to( { alpha: 0 }, parentFadeSecs*250, Phaser.Easing.Linear.None, true, 0, 0, false);
+                                                    //speed..........easing.........autoStart..Delay..Repeat..Yoyo
+        game.add.tween( human2 ).to( { alpha: 0 }, parentFadeSecs*250, Phaser.Easing.Linear.None, true, 0, 0, false);
+    }*/
+    
+    if (gameTime > (parentFadeSet + miniMapFadeSet)) {
+        game.add.tween( miniMap ).to( { alpha: 0 }, miniMapFadeSecs*250, Phaser.Easing.Linear.None, true, 0, 0, false);
+    }
+    
+    
+    //Fade notifications
+    if ((gameTime % notiFadeInterval) == 0) {
+        newNoti = true;
+        if (notiNum > 0 && notiNum < notiGroup.children.length + 1) {
+            //game.add.tween( notiGroup.children[ (notiNum-1) ] ).to( { alpha: 0 }, notiFadeSecs*1000, Phaser.Easing.Linear.None, true, 0, 0, false);
+            //game.add.tween( notiGroup.children[ (notiNum-1) ].scale ).to( { x: 0.5, y: 0.5 }, notiFadeSecs*500, Phaser.Easing.Linear.None, true, 0, 0, true);
+
+        }
+        
+        
+        //Notifications
+        if ( newNoti == true && !game.physics.arcade.overlap(player,earth,null,null,this)){
+            if (notiNum < notiGroup.children.length) {
+                var tweenSizeIn = game.add.tween( notiGroup.children[notiNum].scale ).to( { x: 1, y: 1 }, notiFadeSecs*250, Phaser.Easing.Cubic.Out, true, 0, 4, true);
+                var tweenSizeOut = game.add.tween( notiGroup.children[ (notiNum) ].scale ).to( { x: 0.5, y: 0.5 }, notiFadeSecs*1000, Phaser.Easing.Quadratic.In, true, notiFadeDelay*1000, 0, true);
+
+
+                var tweenAlphaIn = game.add.tween( notiGroup.children[notiNum] ).to( { alpha: 1 }, notiFadeSecs*1000, Phaser.Easing.Linear.None, true, 0, 0, false);
+                var tweenAlphaOut = game.add.tween( notiGroup.children[notiNum] ).to( { alpha: 0 }, notiFadeSecs*1000, Phaser.Easing.Linear.None, true, notiFadeDelay*1000, 0, false);
+
+                tweenSizeIn.chain(tweenSizeOut);
+                tweenAlphaIn.chain(tweenAlphaOut);
+
+                tweenSizeIn.start();
+                tweenAlphaIn.start();
+                textSound.play();
+                newNoti= false;
+            }
+            notiNum += 1;
+        }
+    }
+    console.log("notiNum: "+notiNum);
+    
+        switch(notiNum){
+            case 0:
+                console.log("inside switch noti");
+            case 1:
+            case 2:
+                 console.log("inside switch noti case 0 1 2");
+                familyYoung.reset(npcX,npcY);
+               break;
+                
+            case 3:
+            case 4: 
+            case 5:
+                familyYoung.kill();
+                familyOld.reset(npcX,npcY);
+                break;
+                
+            case 6:
+            case 7:
+            case 8:  
+                dadDieSet = true;
+                familyOld.kill();
+                broMom.reset(npcX,npcY);
+                break;
+           
+            case 9: 
+                momDieSet = true;
+                broMom.kill();
+                bro.reset(npcX,npcY);
+                break;
+                
+            case 10:
+                broDieSet = true;
+                bro.kill();
+                human1.reset(npcX,npcY);
+                break;
+                
+            default:
+                break;
+        }
+    
+    
+    
+    //40 secs before end of game: fade to black
+    if (gameTime == gameTimerNum-40) {
+        game.add.tween( gameOverSlate ).to( { alpha: 1 }, 40*1000, Phaser.Easing.Linear.None, true, 0, 0, false);
+    }
+    //5 Secs before end of game: rotate player
+    if (gameTime == gameTimerNum-5) {
+        game.add.tween( player ).to( { angle:180 }, 2*1000, Phaser.Easing.Cubic.In, true, 0, 0, false);
+    }
+    
+     if (gameTime == gameTimerNum) {
+        game.add.tween( player ).to( { alpha: 0 }, 3000, Phaser.Easing.Linear.None, true, 0, 0, false);
+    }
+    
+    //console.log ("notifNum: " + (gameTime % 3) + ", " + notiNum);
+    //console.log("gameTime:" + (gameTime-3) + ", " + extraStatus);
+}
+    
+function updateGameText() {
+    var endGameTimerCont = gameWorldTime;//Math.ceil(game.time.events.duration/1000);
+    var countYearsEarth;
+    var countYearsAge;
+    countYearsAge =  Math.ceil(playerAge);
+    countYearsEarth = Math.ceil(earthYears);
+    //var playerX = Math.floor(player.x) ;
+    //var playerY = Math.floor(player.y) ;
+    //GAMETEXTDISPLAY
+  //  console.log(gameStarted);
+    //  console.log(countYearsAge);
+    yearsEarth.text = "Earth: Year " + countYearsEarth + " CE";
+    yearsAge.text = "Your Age: " + countYearsAge + " Earth Years";
+/*
+    if(gameStarted){
+        yearsEarth.text = "Earth: Year " + countYearsEarth + " CE";
+        yearsAge.text = "Your Age: " + countYearsAge + " Earth Years";
+    }else{
+         yearsEarth = 'Earth: Year 2100 CE';
+         yearsAge = 'Your Age: 25 Earth Years';
+    }
+    spriteText.text = 'Player is at x: ' + playerX + ' y: ' + playerY + '.';
+   */ 
+}
+    
+function updateMiniMap(object, icon) {
+    objectX = object.x;
+    objectY = object.y;
+    
+    icon.x = (objectX/miniMapScale);
+    icon.y = (objectY/miniMapScale);
+}
+
+
+function updateScore(visitedBool) {
+    if (visitedBool == false) {
+      //  score += 1;
+      //  scoreText.text = 'Universe Explored: ' + score/10000 +'%';
+        miniMapIsOff = false;
+        doBlink = true;
+        doBlinkCount = 3;
+    }
+}
+
+
+function screenWrap (sprite) {
+    
+    if (sprite.x < worldLeftBound)
+    {
+        sprite.body.x = worldRightBound - (worldBoundPadding*2);
+    }
+    else if (sprite.x > worldRightBound - worldBoundPadding)
+    {
+        sprite.body.x = worldLeftBound + (worldBoundPadding*2);
+    }
+
+    if (sprite.y < worldUpBound)
+    {
+        sprite.body.y = worldDownBound - (worldBoundPadding*2.5);
+    }
+    else if (sprite.y > worldDownBound - worldBoundPadding)
+    {
+        sprite.body.y = worldUpBound + (worldBoundPadding*2);
+    }
+
+}
+
+function render() {
+    game.debug.soundInfo(music,20,32);
+}
+    
+
+function applyDistort (player,planet){
+ //Add planet code here! 4/5
+    lastVisited = planet.key;
+    //console.log(planet.key);
+    
+    switch (lastVisited) {
+        case 'earth':
+       // case 'earthPoly':
+       // case 'earthGrey':
+          //  console.log("case earth");
+            distortNone(); //no distortion
+            earthVisited = true;
+            mode = 'normal';
+            shootingstar.alpha = 0;
+            marbleF.alpha = 0;
+            player.alpha =1;
+            break;
+            
+        case 'moon':
+            updateScore(moonVisited);
+            moonVisited = true;
+            moonMini.alpha = 1;
+            mode = 'mooncontrol';
+            shootingstar.alpha = 0;
+            marbleF.alpha = 0;
+            player.alpha =1;
+            break;
+            
+         case 'starfield':
+            updateScore(starfieldVisited);
+            starfieldVisited = true;
+            starfieldMini.alpha = 1;
+            mode = 'normal';
+            shootingstar.alpha = 1;
+            marbleF.alpha = 0;
+            player.alpha =1;
+            break;
+            
+        case 'planetInvi':
+        //case 'planetInviPoly':
+        //case 'planetInviGrey':
+        //case 'planetInviPolyGrey':    
+            distortInvi();//alpha = 0 all invisible
+            updateScore(planetInviVisited);
+          //  console.log("case invi");
+            planetInviVisited = true;
+            planetInviMini.alpha = 1;
+            mode = 'inverse';
+            shootingstar.alpha = 0;
+            marbleF.alpha = 0;
+            player.alpha =0.3;
+            break;
+        case 'planetAngular':
+       // case 'planetAngularGrey':
+            distortPoly();//poly
+            updateScore(planetAngularVisited);
+           // console.log("case angular");
+            planetAngularVisited =true;
+            planetAngularMini.alpha = 1;
+            mode = 'shift+1';
+            shootingstar.alpha = 0;
+            marbleF.alpha = 0;
+            player.alpha =1;
+            break;
+        case 'planetRock':
+       // case 'planetRockPoly':
+       // case 'planetRockPolyGrey':
+            updateScore(planetRockPolyVisited);
+            //console.log("case rock");
+            planetRockPolyVisited = true;
+            planetRockPolyMini.alpha = 1;
+            shootingstar.alpha = 0;
+            marbleF.alpha = 0;
+            player.alpha =1;
+            spawnAliens();
+            break;
+        case 'planetNoir':
+      //  case 'planetNoirPoly':
+            planetNoirVisited = true;
+            planetNoirMini.alpha = 1;
+            distortGrey();//black and white
+            break;
+        case 'planetMarble':
+            planetMarbleVisited = true;
+            planetMarbleMini.alpha = 1;
+            mode = 'shift-1';
+            shootingstar.alpha = 0;
+            marbleF.alpha = 1;
+            player.alpha = 1;
+            break;
+        case 'planetBlur':
+            distortBlur();
+            planetBlurVisited = true;
+            planetBlurMini.alpha = 1;
+            shootingstar.alpha = 0;
+            marbleF.alpha = 0;
+            player.alpha = 1;
+            break;
+            
+        default:
+            distortNone();
+         //   console.log("case default");
+            shootingstar.alpha = 0;
+            marbleF.alpha = 0;
+            player.alpha =1;
+            break;
+    }
+}
+    
+function distortNone() {
+  //  console.log("in distort none");
+    
+    
+    //set all planets invi 
+    for (var i = 0, len = planetsGrey.children.length; i < len; i++) {
+            game.add.tween( planetsGrey.children[i]).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+     }
+      for (var i = 0, len = planetsPoly.children.length; i < len; i++) {
+            game.add.tween( planetsPoly.children[i]).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+     }
+     for (var i = 0, len = planetsBlur.children.length; i < len; i++) {
+            game.add.tween( planetsBlur.children[i]).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+     }
+      
+    //sets default planets 
+     for (var i = 0, len = planetsDefault.children.length; i < len; i++) {
+           game.add.tween( planetsDefault.children[i]).to( { alpha: 1 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+     }
+    
+    
+    //background
+    game.add.tween(bg).to( { alpha: 1 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+    game.add.tween(bgPoly).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+    game.add.tween(bgGrey).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true);
+    game.add.tween(bgBlur).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+     
+}
+    
+function distortInvi() {
+    
+      //set all planets invi 
+    for (var i = 0, len = planetsGrey.children.length; i < len; i++) {
+            game.add.tween( planetsGrey.children[i]).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+    }
+    for (var i = 0, len = planetsPoly.children.length; i < len; i++) {
+          game.add.tween( planetsPoly.children[i]).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+    }
+      for (var i = 0, len = planetsBlur.children.length; i < len; i++) {
+            game.add.tween( planetsBlur.children[i]).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+     }
+    
+    //sets default planets to almost invi
+    for (var i = 0, len = planetsDefault.children.length; i < len; i++) {
+           game.add.tween( planetsDefault.children[i] ).to( { alpha: 0.005 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+    }
+    
+     //background
+    game.add.tween(bg).to( { alpha: 0.2 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+    game.add.tween(bgPoly).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+    game.add.tween(bgGrey).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true);
+     game.add.tween(bgBlur).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+    
+}
+    
+function distortPoly() {
+  //  console.log("in distortpoly");
+    
+    //set all planets invi 
+        for (var i = 0, len = planetsGrey.children.length; i < len; i++) {
+            game.add.tween( planetsGrey.children[i]).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+     }
+     //sets default planets 
+     for (var i = 0, len = planetsDefault.children.length; i < len; i++) {
+           game.add.tween( planetsDefault.children[i]).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+     }
+      for (var i = 0, len = planetsBlur.children.length; i < len; i++) {
+            game.add.tween( planetsBlur.children[i]).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+     }
+    
+    
+    //set poly planets
+    for (var i = 0, len = planetsPoly.children.length; i < len; i++) {
+            game.add.tween( planetsPoly.children[i]).to( { alpha: 1 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+     }
+   
+     //background
+    game.add.tween(bg).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+    game.add.tween(bgPoly).to( { alpha: 1 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+    game.add.tween(bgGrey).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true);
+     game.add.tween(bgBlur).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+
+}
+    
+function distortGrey() {
+    //set all planets invi 
+    for (var i = 0, len = planetsGrey.children.length; i < len; i++) {
+            game.add.tween( planetsGrey.children[i]).to( { alpha: 1 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+     }
+      for (var i = 0, len = planetsPoly.children.length; i < len; i++) {
+            game.add.tween( planetsPoly.children[i]).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+     }
+      for (var i = 0, len = planetsBlur.children.length; i < len; i++) {
+            game.add.tween( planetsBlur.children[i]).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+     }
+      
+    //sets default planets 
+     for (var i = 0, len = planetsDefault.children.length; i < len; i++) {
+           game.add.tween( planetsDefault.children[i]).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+     }
+    
+    
+    //background
+    game.add.tween(bg).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+    game.add.tween(bgPoly).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+    game.add.tween(bgGrey).to( { alpha: 1 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true);
+    game.add.tween(bgBlur).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+     
+
+    
+}
+
+function distortBlur(){
+     //set all planets invi 
+    for (var i = 0, len = planetsGrey.children.length; i < len; i++) {
+            game.add.tween( planetsGrey.children[i]).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+     }
+      for (var i = 0, len = planetsPoly.children.length; i < len; i++) {
+            game.add.tween( planetsPoly.children[i]).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+     }
+      for (var i = 0, len = planetsBlur.children.length; i < len; i++) {
+            game.add.tween( planetsBlur.children[i]).to( { alpha: 1 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+     }
+      
+    //sets default planets 
+     for (var i = 0, len = planetsDefault.children.length; i < len; i++) {
+           game.add.tween( planetsDefault.children[i]).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+     }
+    
+    
+    //background
+    game.add.tween(bg).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+    game.add.tween(bgPoly).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+    game.add.tween(bgGrey).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true);
+    game.add.tween(bgBlur).to( { alpha: 1 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+     
+    
+}
+    
+
+    
+function npcMoonInteract(player, npc){
+    if(!(game.physics.arcade.overlap(moon,npcMoon,null,null,this))){
+       npc.kill();
+    }
+}
+    
+    
+    
+function npcRockInteract(player,npc){
+    npc.kill();
+}
+
+function spawnAliens(){
+  if(!alien3a.alive){
+       alien3a.reset(game.rnd.integerInRange(120, 700),game.rnd.integerInRange(3333*1.5, 3900+3333*0.5));
+   }
+    if(!alien3b.alive){
+       alien3b.reset(game.rnd.integerInRange(120, 700),game.rnd.integerInRange(3333*1.5, 3900+3333*0.5));
+   }
+}    
+    
+function familyYoungChat(){
+    console.log("familyYoungChat");
+    if(timeOnEarth >= 10){
+        stayEarthText2.alpha = 1;
+    }else if(timeOnEarth >=5) {
+        stayEarthText1.alpha = 1;
+     }else{
+        familyYoungText.alpha = 1; 
+     }
+    
+}
+    
+function familyOldChat(){
+     console.log("familyOldChat");
+     if(timeOnEarth >=7) {
+        stayEarthText2.alpha = 1;
+     }else{
+        familyOldText.alpha = 1; 
+     } 
+}
+    
+function broMomChat(){
+    broMomText.alpha =1;
+     console.log("broMomChat"); 
+}
+
+function broChat(){
+    broText1.alpha = 1; 
+     console.log("broChat");
+}
+    
+    
+function human1Chat(){
+    human1Text.alpha = 1; 
+     console.log("human1Chat");
+}
+    
+
+
+</script>
+    
+</body>
+</html>
