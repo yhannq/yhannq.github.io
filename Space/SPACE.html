@@ -336,7 +336,7 @@ var notiFadeDelay;
 var gameStarted = false;
 var gameNotOver = false;
 var gameWorldTime = 0;
-var playerAge =25;
+var playerAge =20;
 var earthYears = 2100;
 var timer1;
 var timer2;
@@ -373,7 +373,7 @@ function create() {
     playerStartX = earthX+500;
     playerStartY = earthY+500;
     //HACK PLAYER MOVE SPEED HERE
-    playerSpeed = 700;
+    playerSpeed = 400;
     //Planet tween change speed
     planetChangeSpeed = 1000;
     
@@ -906,8 +906,8 @@ function move(object, dir, speed, modeIn) {
             object.body.velocity.y = speed;
             break;
         default:
-            object.body.velocity.x = speed;
-            object.body.velocity.y = speed;
+            object.body.velocity.x = 0;
+            object.body.velocity.y = speed/30;
             break;
     }
 }
@@ -1001,7 +1001,7 @@ function update() {
             blinkMiniMap();
         }
         
-         if(playerAge >= 65){
+         if(playerAge >= 55){
             endGameF(); 
         }
         
@@ -1282,7 +1282,7 @@ function applyDistort (player,planet){
             mode = 'inverse';
             shootingstar.alpha = 0;
             marbleF.alpha = 0;
-            player.alpha =0.3;
+            player.alpha =0.6;
             break;
         case 'planetAngular':
        // case 'planetAngularGrey':
@@ -1390,7 +1390,7 @@ function distortInvi() {
     }
     
      //background
-    game.add.tween(bg).to( { alpha: 0.2 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
+    game.add.tween(bg).to( { alpha: 0.5 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
     game.add.tween(bgPoly).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
     game.add.tween(bgGrey).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true);
      game.add.tween(bgBlur).to( { alpha: 0 }, planetChangeSpeed, Phaser.Easing.Linear.None, true, 0, 1000, true); 
