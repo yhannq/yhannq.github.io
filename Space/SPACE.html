@@ -712,7 +712,7 @@ function create() {
     scoreText.cameraOffset.setTo(50, (winH - 50));
    */ 
       //End Game text
-    gameOverText = game.add.text((winW/2), (winH/2), 'The End', { font: '50px Abel;', fill: 'red' });
+    gameOverText = game.add.text((winW/2-100), (winH/2), 'Was this really how you wanted to spend your life?', { font: '50px Abel;', fill: 'red' });
     gameOverText.anchor.setTo(0.5,0.5);
     gameOverText.fixedToCamera = true;
     gameOverText.visible = false;
@@ -1022,15 +1022,15 @@ function endGameF() {
 function ageCounter(){
     if(!game.physics.arcade.overlap(player,earth,null,null,this)){
         //if not on earth
-         playerAge = playerAge+ 1/10;
+         playerAge = playerAge+ 1/20;
         timeOnEarth = 0;
     }else{
          //if on earth
         timeOnEarth++;
-        playerAge = playerAge+ 1/2;
+        playerAge = playerAge+ 1/5;
     } 
     
-    earthYears = earthYears +1/2;
+    earthYears = earthYears +1/5;
 }
     
 function blinkMiniMap() {
