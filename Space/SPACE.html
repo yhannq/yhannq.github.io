@@ -149,6 +149,7 @@ function preload() {
     
      game.load.script('gray', 'https://cdn.rawgit.com/photonstorm/phaser/master/filters/Gray.js');
    
+    game.load.start();
 }
     
 var music;
@@ -344,8 +345,10 @@ var timeOnEarth = 0;
 var npcX;
 var npcY;
     
+var loadText;
+    
 function create() {
-
+    
 //--PREFERENCES------------------------------------------------------
     //No of seconds before game ends
     gameTimerNum = 300;
@@ -535,7 +538,7 @@ function create() {
     npcRock.add(alien3b);
     
     for (var i = 0, len = npcEarth.children.length; i < len; i++) {
-         console.log("npcdisable  working")
+         console.log("npcdisable  working");
             npcEarth.children[i].kill();
      }
     
@@ -678,7 +681,7 @@ function create() {
     
     miniMap.alpha = 0;
 
-      console.log("minimap working")
+      console.log("minimap working");
 //--PLAYER CREATION--------------------------------------------------------------
     // The player and its settings
     player = game.add.sprite(playerStartX, playerStartY, 'dude');
@@ -903,8 +906,8 @@ function move(object, dir, speed, modeIn) {
             object.body.velocity.y = speed;
             break;
         default:
-            object.body.velocity.x = 0;
-            object.body.velocity.y = 0;
+            object.body.velocity.x = speed;
+            object.body.velocity.y = speed;
             break;
     }
 }
@@ -1247,6 +1250,7 @@ function applyDistort (player,planet){
             break;
             
         case 'moon':
+            distortNone();
             updateScore(moonVisited);
             moonVisited = true;
             moonMini.alpha = 1;
@@ -1261,7 +1265,7 @@ function applyDistort (player,planet){
             starfieldVisited = true;
             starfieldMini.alpha = 1;
             mode = 'normal';
-            shootingstar.alpha = 1;
+            shootingstar.alpha = 0.7;
             marbleF.alpha = 0;
             player.alpha =1;
             break;
@@ -1296,6 +1300,7 @@ function applyDistort (player,planet){
        // case 'planetRockPoly':
        // case 'planetRockPolyGrey':
             updateScore(planetRockPolyVisited);
+            distortNone();
             //console.log("case rock");
             planetRockPolyVisited = true;
             planetRockPolyMini.alpha = 1;
@@ -1315,7 +1320,7 @@ function applyDistort (player,planet){
             planetMarbleMini.alpha = 1;
             mode = 'shift-1';
             shootingstar.alpha = 0;
-            marbleF.alpha = 1;
+            marbleF.alpha = 0.5;
             player.alpha = 1;
             break;
         case 'planetBlur':
