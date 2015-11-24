@@ -100,7 +100,7 @@ function preload() {
     game.load.image('dude', 'assets/Astronaut.png', 32, 48);
 
     //Aliens
-    game.load.image('alien1', 'assets/alien1.png');  
+    game.load.image('alien1', 'assets/Alien1.png');  
     game.load.image('alien2', 'assets/alien2.png');
     game.load.image('alien3a', 'assets/alien-3a.png');
     game.load.image('alien3b', 'assets/alien-3b.png');
@@ -373,7 +373,7 @@ function create() {
     playerStartX = earthX+500;
     playerStartY = earthY+500;
     //HACK PLAYER MOVE SPEED HERE
-    playerSpeed = 400;
+    playerSpeed = 300;
     //Planet tween change speed
     planetChangeSpeed = 1000;
     
@@ -715,7 +715,7 @@ function create() {
     scoreText.cameraOffset.setTo(50, (winH - 50));
    */ 
       //End Game text
-    gameOverText = game.add.text((winW/2-100), (winH/2), 'Was this really how you wanted to spend your life?', { font: '50px Abel;', fill: 'red' });
+    gameOverText = game.add.text((winW/2-75), (winH/2), 'Was this how you wanted to spend your life?', { font: '32px Abel', fill: '#ffffff' });
     gameOverText.anchor.setTo(0.5,0.5);
     gameOverText.fixedToCamera = true;
     gameOverText.visible = false;
