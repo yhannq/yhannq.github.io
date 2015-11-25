@@ -1316,14 +1316,14 @@ function applyDistort (player,planet){
             planetNoirMini.alpha = 1;
             shootingstar.alpha = 0;
             distortGrey();//black and white
-            mode = 'shift-1';
+            mode = 'shift+1';
             break;
         case 'planetMarble':
             planetMarbleVisited = true;
             planetMarbleMini.alpha = 1;
-            mode = 'shift+1';
+            mode = 'shift-1';
             shootingstar.alpha = 0;
-            marbleF.alpha = 0.5;
+            marbleF.alpha = 1;
             player.alpha = 1;
             break;
         case 'planetBlur':
