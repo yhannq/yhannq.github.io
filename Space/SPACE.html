@@ -357,11 +357,11 @@ function create() {
     worldDownBound = 15000;
     //planet location coordinates
     earthX = 5000*1.5; earthY = 5000*1.5;
-    angularX = 8500*1.5; angularY = 400*1.5;
+    starfieldX = 8500*1.5; starfieldY = 400*1.5;
     inviX = 7900*1.5; inviY = 8300*1.5;
     rockX = 100*1.5; rockY = 3333*1.5;
     moonX = 5678*1.5; moonY = 6500*1.5;
-    starfieldX = 4100*1.5; starfieldY = 4100*1.5;
+    angularX = 4100*1.5; angularY = 4100*1.5;
     marbleX = 1111*1.5; marbleY = 1200*1.5;
     blurX = 7654*1.5; blurY = 3456*1.5;
     noirX = 1234*1.5; noirY = 8750*1.5;
@@ -1301,6 +1301,7 @@ function applyDistort (player,planet){
        // case 'planetRockPolyGrey':
             updateScore(planetRockPolyVisited);
             distortNone();
+            mode = 'inverse';
             //console.log("case rock");
             planetRockPolyVisited = true;
             planetRockPolyMini.alpha = 1;
@@ -1313,12 +1314,14 @@ function applyDistort (player,planet){
       //  case 'planetNoirPoly':
             planetNoirVisited = true;
             planetNoirMini.alpha = 1;
+            shootingstar.alpha = 0;
             distortGrey();//black and white
+            mode = 'shift-1';
             break;
         case 'planetMarble':
             planetMarbleVisited = true;
             planetMarbleMini.alpha = 1;
-            mode = 'shift-1';
+            mode = 'shift+1';
             shootingstar.alpha = 0;
             marbleF.alpha = 0.5;
             player.alpha = 1;
@@ -1327,6 +1330,7 @@ function applyDistort (player,planet){
             distortBlur();
             planetBlurVisited = true;
             planetBlurMini.alpha = 1;
+            mode = 'shift-1';
             shootingstar.alpha = 0;
             marbleF.alpha = 0;
             player.alpha = 1;
